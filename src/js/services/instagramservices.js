@@ -8,6 +8,6 @@ export default{
     },
 
     getPostUrl(mediaId){
-        return fetch(`https://graph.instagram.com/${mediaId}?fields=id,media_type,media_url,username,timestamp&access_token=${token}`,options) 
+        return fetch(`https://graph.instagram.com/${mediaId}?fields=id,media_type,media_url,permalink,username,timestamp&access_token=${token}`,options) 
     }
 } 

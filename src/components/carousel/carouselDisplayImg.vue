@@ -1,11 +1,10 @@
 <template>
-    <div>
-
-        <img class="imgCarrousel" :src="url.Url" alt="Imagen">
-        <video src=""></video>
+    <div class="imgcarrouselcontainer">
+        <img v-if="!isVideo" class="imgcarrouselcontainer__img" :src="Media.Url" alt="Imagen">
+        <video v-if="isVideo" class="imgcarrouselcontainer__img" autoplay :src="Media.Url + '.mp4' ">
+        </video>
     </div>
 </template>
-
 <script>
 
 import {mapState} from 'vuex';
@@ -18,23 +17,25 @@ import {mapState} from 'vuex';
         },
         data() {
             return {
-            url: ''
+            Media:{},
+            isVideo:'',
             }
         },
         watch: {
             Id(newValue) {
-                if (this.$store.getters.getUrlPhoto(newValue.id) === undefined){
 
+                if (this.$store.getters.getUrlPhoto(newValue.id) === undefined){
                     this.$store.dispatch('getPhotoUrl',newValue.id)
                     .then(()=>{
-                        this.url = this.$store.getters.getUrlPhoto(newValue.id);   
+                        this.Media = this.$store.getters.getUrlPhoto(newValue.id);
+                        this.Media.Media == 'VIDEO' ? this.isVideo = true : this.isVideo = false;
                     })
-
                 } else{
-
-                    this.url = this.$store.getters.getUrlPhoto(newValue.id); 
-
+                    this.Media = this.$store.getters.getUrlPhoto(newValue.id);
+                    this.Media.Media == 'VIDEO' ? this.isVideo = true : this.isVideo = false; 
                 }
+
+                
             }
         },
         computed: {
@@ -46,7 +47,15 @@ import {mapState} from 'vuex';
 </script>
 
 <style>
-.imgCarrousel{
-    width:100vh;
+.imgcarrouselcontainer{
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.imgcarrouselcontainer__img{
+    max-width: 430px;
+    max-height: 430px;
 }
 </style>

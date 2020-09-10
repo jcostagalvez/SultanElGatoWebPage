@@ -36,7 +36,7 @@ export default {
            return instagramservices.getPostUrl(Id)
             .then(result => result.json())
             .then(data => {
-                const photo = {Id: Id, Url:data.media_url};
+                const photo = {Id: Id, Url:data.media_url, Media:data.media_type, permalink: data.permalink};
                 commit('SET_PHOTOS_URL', photo)
                 return photo
             })
